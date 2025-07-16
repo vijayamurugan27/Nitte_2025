@@ -1,0 +1,12 @@
+
+
+#include <stdio.h>
+
+static void privateFunction() {
+    printf("This function is only visible in this file.\n");
+}
+
+int main() {
+    privateFunction();
+    return 0;
+}

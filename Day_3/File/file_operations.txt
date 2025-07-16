@@ -1,0 +1,15 @@
+    Modes:
+
+        "r": Read (file must exist)
+
+        "w": Write (creates or truncates)
+
+        "a": Append (creates or appends)
+
+        "r+": Read/update (file must exist)
+
+        "w+": Write/update (creates or truncates)
+
+        "a+": Append/update (creates or appends)
+
+        Add "b" for binary mode (e.g., "rb", "wb+")
