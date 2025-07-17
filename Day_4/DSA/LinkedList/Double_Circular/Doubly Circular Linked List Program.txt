@@ -1,0 +1,140 @@
+
+This program implements a Doubly Circular Linked List in C, 
+which combines features of both doubly linked lists and circular linked lists. Below is a structured breakdown:
+
+    1. Node Structure:
+
+
+            struct Node {
+                int data;           // Stores integer value
+                struct Node *next;  // Points to next node
+                struct Node *prev;  // Points to previous node
+            };
+
+        Each node has:
+
+            data → Stores the value.
+
+            next → Points to the next node.
+
+            prev → Points to the previous node.
+
+        The list is circular: head->prev = tail and tail->next = head.
+
+
+    2. Global Variables
+
+        struct Node *head, *tail;  // head = first node, tail = last node
+
+                head → Always points to the first node.
+
+                tail → Always points to the last node.
+
+    
+    3. Core Functions
+            1. create() - Creates the List
+
+                Takes user input for the number of nodes and their data.
+
+                Dynamically allocates memory for each node.
+
+                Links nodes in a circular manner (prev and next pointers form a loop).
+
+            2. display() - Prints the List
+
+                Traverses from head until it circles back to head.
+
+                Prints each node's data.
+
+            3. Insertion Operations
+
+                Function	Description
+                insertAtBeg()	Inserts a node at the beginning.
+                insertAtEnd()	Inserts a node at the end.
+                insertAtPos()	Inserts a node at a given position.
+
+            4. Deletion Operations
+
+                Function	Description
+                deleteAtBeg()	Deletes the first node.
+                deleteAtEnd()	Deletes the last node.
+                deleteAtPos()	Deletes a node at a given position.
+
+            5. Update Operations
+            
+                Function	Description
+                update()	Updates a node with a given value.
+                updateAtPos()	Updates a node at a given position.
+
+            6. Utility Functions
+
+                Function	Description
+                get_length()	Returns the number of nodes.
+                search()	Searches for a value in the list.
+                reverse()	Reverses the list.
+
+    4. Main Function (Menu-Driven Program)
+
+        Presents a menu with 13 operations.
+
+        Uses switch-case to execute the chosen function.
+
+        Runs infinitely (while(1)) until the user exits.
+
+    5. Key Features
+
+        Bidirectional Traversal
+
+            Can move forward (next) and backward (prev).
+
+        Circular Structure
+
+            No NULL pointers (except when empty).
+
+            tail->next = head and head->prev = tail.
+
+        Efficient Operations
+
+            O(1) insertion/deletion at both ends (head and tail).
+
+        Edge Cases Handled
+
+            Empty list (head == NULL).
+
+            Single-node list (head == tail).
+
+    6. Example Execution
+    Input:
+
+        Create a list: 3 → 1 → 4 → 2 (circular and doubly linked).
+
+        Insert at beginning: 5 → 3 → 1 → 4 → 2 (circular).
+
+        Delete at position 3: 5 → 3 → 4 → 2 (circular).
+
+        Display: 5 3 4 2 (loops back to 5).
+
+    Output: 
+
+        Displaying Linked List  
+            5 3 4 2
+
+
+    7. Comparison with Other Lists
+
+Feature	                Singly Linked List	            Doubly Linked List	        Doubly Circular Linked List
+Traversal	            Forward only	                Forward & backward	        Forward & backward (circular)
+End Connections	        Last node points to NULL	    First/last point to NULL	Last node points to first
+Memory Overhead	        Low (1 pointer/node)	        Medium (2 pointers/node)	High (2 pointers/node)
+Insert/Delete at Ends	O(n) (unless tail maintained)	O(1)	                    O(1)
+
+
+    This program is a complete implementation of a Doubly Circular Linked List, demonstrating:
+
+            Dynamic memory allocation.
+
+            Bidirectional traversal.
+
+            Circular linking.
+
+            Efficient insertions/deletions.
