@@ -259,7 +259,9 @@ int main()
             get_length();
             break;
         case 10:
-            exit(0);
+            exit(0);`+                                                                                          .
+
+            AZ`1
         default:
             printf("Wrong Choice!!\n");
         }
