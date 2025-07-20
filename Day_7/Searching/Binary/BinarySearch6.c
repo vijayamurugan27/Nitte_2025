@@ -6,7 +6,7 @@ void BinarySearch(int arr[], int n, int x) {
     while (l <= r) {
         mid = l + (r - l) / 2;
         if (arr[mid] == x) {
-            printf("Element found at index %d\n", mid);
+            printf("Element found at index %d (in the sorted array)\n", mid);
             return;
         } else if (arr[mid] < x) {
             l = mid + 1;
@@ -34,36 +34,55 @@ void sortArray(int arr[], int n) {
 int main() {
     int n, i;
 
-    // Get the size of the array from the user
+    // Step 1: Take array input
     printf("Enter the size of the array: ");
     scanf("%d", &n);
 
-    // Create an array of the specified size
-    int arr[n];
+    int arr[n], copy[n];
 
-    // Get the array elements from the user
     printf("Enter %d elements:\n", n);
     for (i = 0; i < n; i++) {
+        printf("Element %d: ", i + 1);
         scanf("%d", &arr[i]);
+        copy[i] = arr[i]; // Save original for display
     }
 
-    // Sort the array
+    // Step 2: Show original array
+    printf("\nOriginal array: ");
+    for (i = 0; i < n; i++) {
+        printf("%d ", copy[i]);
+    }
+
+    // Step 3: Sort and display sorted array
     sortArray(arr, n);
 
-    // Print the sorted array
-    printf("Sorted array: ");
+    printf("\nSorted array: ");
     for (i = 0; i < n; i++) {
         printf("%d ", arr[i]);
     }
     printf("\n");
 
-    // Get the element to search for from the user
-    int key;
-    printf("Enter the element to search for: ");
-    scanf("%d", &key);
+    // Step 4: Start binary search loop
+    while (1) {
+        int key;
+        char choice;
 
-    // Perform Binary Search
-    BinarySearch(arr, n, key);
+        // Ask user for the element to search
+        printf("\nEnter the element to search for: ");
+        scanf("%d", &key);
+
+        // Perform binary search
+        BinarySearch(arr, n, key);
+
+        // Ask user whether to continue searching
+        printf("Do you want to search another element? (y/n): ");
+        scanf(" %c", &choice); // space before %c handles newline
+
+        if (choice == 'n' || choice == 'N') {
+            printf("Exiting search. Goodbye!\n");
+            break;
+        }
+    }
 
     return 0;
 }
