@@ -1,38 +1,74 @@
 #include <stdio.h>
 
-void insertionSort(int a[], int n)
+void Merge(int arr[], int beg, int mid, int end)
 {
-    int i, j, temp;
-    for (i = 1; i < n; i++)
-    {
-        temp = a[i];
-        j = i - 1;
+    int i, j, k;
+    int n1 = mid - beg + 1;
+    int n2 = end - mid;
 
-        while (j >= 0 && temp <= a[j])
+    int L[n1], R[n2];
+
+    for (i = 0; i < n1; i++)
+        L[i] = arr[beg + i];
+    for (j = 0; j < n2; j++)
+        R[j] = arr[mid + 1 + j];
+
+    i = 0;
+    j = 0;
+    k = beg;
+
+    while (i < n1 && j < n2)
+    {
+        if (L[i] <= R[j])
         {
-            a[j + 1] = a[j];
-            j--;
+            arr[k] = L[i];
+            i++;
         }
-        a[j + 1] = temp;
+        else
+        {
+            arr[k] = R[j];
+            j++;
+        }
+        k++;
+    }
+
+    while (i < n1)
+    {
+        arr[k] = L[i];
+        i++;
+        k++;
+    }
+
+    while (j < n2)
+    {
+        arr[k] = R[j];
+        j++;
+        k++;
     }
 }
 
-void printArray(int a[], int n)
+void MergeSort(int arr[], int beg, int end)
 {
-    for (int i = 0; i < n; i++)
+    if (beg < end)
     {
-        printf("%d ", a[i]);
+        int mid = (beg + end) / 2;
+
+        MergeSort(arr, beg, mid);
+        MergeSort(arr, mid + 1, end);
+
+        Merge(arr, beg, mid, end);
     }
 }
 
 int main()
 {
-    int a[] = {64, 25, 12, 22, 11, 90};
-    int n = sizeof(a) / sizeof(a[0]);
-    printf("Array before sorting:\n");
-    printArray(a, n);
-    insertionSort(a, n);
-    printf("\nArray after sorting:\n");
-    printArray(a, n);
+    int arr[] = {12, 11, 13, 5, 6, 7};
+    int n = sizeof(arr) / sizeof(arr[0]);
+
+    MergeSort(arr, 0, n - 1);
+
+    printf("Sorted array is \n");
+    for (int i = 0; i < n; i++)
+        printf("%d ", arr[i]);
     return 0;
 }

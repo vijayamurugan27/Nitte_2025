@@ -25,9 +25,11 @@ void heapify(int arr[], int n, int i){
 }
 
 void heapSort(int arr[], int n){
+    // build heap
     for(int i = n/2; i >= 0; i--){
         heapify(arr, n, i);
     }
+    // swaps and heaps again
     for(int i = n - 1; i >=  0; i--){
         swap(&arr[0], &arr[i]);
         heapify(arr, i, 0);
