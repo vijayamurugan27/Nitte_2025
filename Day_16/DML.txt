@@ -1,0 +1,105 @@
+DML : 
+
+insert : 
+
+INSERT INTO students (student_id, name, age, grade)
+VALUES (101, 'Alice', 18, 'A');
+
+
+update : 
+
+UPDATE students
+SET grade = 'B'
+WHERE student_id = 101;
+
+Delete: 
+
+UPDATE students
+SET grade = 'B'
+WHERE student_id = 101;
+
+Select : 
+
+SELECT * FROM students;
+
+SELECT name, grade
+FROM students
+WHERE age > 17;
+
+display name and grade whose grade are a+ or A  only
+
+
+
+DCL : Giving user access control over the data:
+
+1) GRANT — Give privileges to a user:
+
+GRANT SELECT, INSERT, UPDATE ON students TO user_name;
+
+Eg:
+GRANT SELECT, UPDATE ON students TO trainer;
+
+
+2) Revoke --Remove Previlages
+
+REVOKE INSERT, UPDATE ON students FROM user_name;
+
+Eg:
+REVOKE UPDATE ON students FROM trainer;
+
+
+
+DDL: Data Definition Language.
+
+1) Creating a table: 
+
+CREATE TABLE students (
+    student_id INT PRIMARY KEY,
+    name VARCHAR(100),
+    age INT,
+    grade CHAR(1)
+);
+
+create a table named Employee with column values,
+Emp_id as primary key
+name, age, Experience, Job_position, salary 
+
+Alter Table: 
+
+ALTER TABLE students
+ADD email VARCHAR(100);
+
+Modify the table :
+
+ALTER TABLE students
+MODIFY name VARCHAR(150);
+
+Rename a Column : 
+ALTER TABLE students
+CHANGE grade final_grade CHAR(1);
+
+Drop a column :
+ALTER TABLE students
+DROP COLUMN email;
+
+Drop a table: 
+
+DROP TABLE students;
+
+
+Renaming a table: 
+RENAME TABLE students TO learners;
+
+TRUNCATE TABLE — Delete all rows (faster than DELETE, can't be rolled back in most DBs):
+
+TRUNCATE TABLE students;
+
+
+| Command                                | Type | Purpose                         |
+| -------------------------------------- | ---- | ------------------------------- |
+| `CREATE`                               | DDL  | Create new tables/objects       |
+| `ALTER`                                | DDL  | Modify structure of tables      |
+| `DROP`                                 | DDL  | Remove table completely         |
+| `TRUNCATE`                             | DDL  | Remove all records quickly      |
+| `INSERT`, `UPDATE`, `DELETE`, `SELECT` | DML  | Work with data inside the table |
+| `GRANT`, `REVOKE`                      | DCL  | Control access/permissions      |
