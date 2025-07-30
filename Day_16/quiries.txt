@@ -1,0 +1,105 @@
+
+SQLite3 SQL Reference for 'students' Table
+==========================================
+
+Table Schema:
+-------------
+CREATE TABLE students (
+    student_id INTEGER PRIMARY KEY,
+    name TEXT,
+    age INTEGER,
+    grade TEXT
+);
+
+
+1) SELECT * 
+-------------
+SELECT * FROM students;
+
+2) SELECT specific columns
+--------------------------
+SELECT name, grade FROM students;
+
+3) WHERE clause
+---------------
+SELECT * FROM students
+WHERE age > 18;
+
+4) GROUP BY
+-----------
+SELECT grade, COUNT(*) AS total
+FROM students
+GROUP BY grade;
+
+5) HAVING
+----------
+SELECT grade, COUNT(*) AS total
+FROM students
+GROUP BY grade
+HAVING total > 2;
+
+6) ORDER BY
+-----------
+SELECT * FROM students
+ORDER BY age ASC;
+
+7) DISTINCT
+-----------
+SELECT DISTINCT grade FROM students;
+
+
+--- DML Commands (Data Manipulation Language) ---
+
+INSERT
+------
+INSERT INTO students (student_id, name, age, grade)
+VALUES (101, 'Alice', 18, 'A');
+
+UPDATE
+------
+UPDATE students
+SET grade = 'B'
+WHERE student_id = 101;
+
+DELETE
+------
+DELETE FROM students
+WHERE student_id = 101;
+
+
+--- DDL Commands (Data Definition Language) ---
+
+CREATE TABLE
+------------
+CREATE TABLE students (
+    student_id INTEGER PRIMARY KEY,
+    name TEXT,
+    age INTEGER,
+    grade TEXT
+);
+
+DROP TABLE
+----------
+DROP TABLE students;
+
+ALTER TABLE - Add Column
+-------------------------
+ALTER TABLE students ADD COLUMN email TEXT;
+
+ALTER TABLE - Rename Column
+----------------------------
+ALTER TABLE students RENAME COLUMN grade TO final_grade;
+
+ALTER TABLE - Rename Table
+--------------------------
+ALTER TABLE students RENAME TO learners;
+
+--- TRUNCATE not supported in SQLite ---
+Use DELETE without WHERE to clear the table:
+DELETE FROM students;
+
+
+--- DCL Commands (Not Supported in SQLite) ---
+SQLite does not support GRANT/REVOKE.
+Use file-level permissions for access control.
+

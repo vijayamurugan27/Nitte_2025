@@ -1,0 +1,177 @@
+
+Advanced SQL Concepts with Examples and Explanations
+====================================================
+
+==============================
+SECTION 1: SQL FUNCTIONS
+==============================
+
+1) COUNT()
+----------
+Counts the number of rows.
+Query:
+SELECT COUNT(*) FROM students;
+
+2) SELECT TOP (Not supported in SQLite, use LIMIT)
+--------------------------------------------------
+Query:
+SELECT * FROM students LIMIT 5;
+
+3) LAST() (Not native in SQLite, use ORDER BY DESC with LIMIT 1)
+----------------------------------------------------------------
+Query:
+SELECT * FROM students ORDER BY student_id DESC LIMIT 1;
+
+4) RAND()
+---------
+Generates a random number.
+Query:
+SELECT RANDOM();
+
+5) SELECT AS
+------------
+Renames a column or table in the result.
+Query:
+SELECT name AS student_name FROM students;
+
+6) SELECT DATE
+--------------
+Gets the current date.
+Query:
+SELECT DATE('now');
+
+7) SELECT SUM
+-------------
+Calculates the sum of a column.
+Query:
+SELECT SUM(age) FROM students;
+
+8) SELECT NULL / 9) NOT NULL
+----------------------------
+Find NULL or NOT NULL values.
+Query:
+SELECT * FROM students WHERE email IS NULL;
+SELECT * FROM students WHERE email IS NOT NULL;
+
+==============================
+SECTION 2: JOINS & SUBQUERIES
+==============================
+
+Tables: students, courses, teachers
+
+CREATE TABLE courses (
+    course_id INTEGER PRIMARY KEY,
+    student_id INTEGER,
+    course_name TEXT
+);
+
+CREATE TABLE teachers (
+    teacher_id INTEGER PRIMARY KEY,
+    course_name TEXT,
+    teacher_name TEXT
+);
+
+i) INNER JOIN with WHERE, ALIAS, and 3 tables
+--------------------------------------------
+Query:
+SELECT s.name, c.course_name, t.teacher_name
+FROM students s
+JOIN courses c ON s.student_id = c.student_id
+JOIN teachers t ON c.course_name = t.course_name
+WHERE s.age > 18;
+
+ii) LEFT JOIN
+-------------
+Query:
+SELECT s.name, c.course_name
+FROM students s
+LEFT JOIN courses c ON s.student_id = c.student_id;
+
+iii) RIGHT JOIN (Not supported in SQLite)
+-----------------------------------------
+Emulated using LEFT JOIN with tables switched.
+
+iv) FULL OUTER JOIN (Not supported directly)
+--------------------------------------------
+Emulated using UNION of LEFT and RIGHT JOINs:
+SELECT s.name, c.course_name
+FROM students s
+LEFT JOIN courses c ON s.student_id = c.student_id
+UNION
+SELECT s.name, c.course_name
+FROM students s
+RIGHT JOIN courses c ON s.student_id = c.student_id;
+
+==============================
+SECTION 3: STORED PROCEDURES & INJECTIONS
+==============================
+
+(Note: SQLite does not support stored procedures. Examples are for SQL Server)
+
+i) Stored Procedure with Input
+------------------------------
+CREATE PROCEDURE GetStudentById @ID INT
+AS
+BEGIN
+    SELECT * FROM students WHERE student_id = @ID;
+END;
+
+ii) Output Parameters
+---------------------
+CREATE PROCEDURE GetStudentGrade @ID INT, @grade CHAR(1) OUTPUT
+AS
+BEGIN
+    SELECT @grade = grade FROM students WHERE student_id = @ID;
+END;
+
+iii) Temporary Procedures
+-------------------------
+LOCAL:   CREATE PROCEDURE #TempProc ...
+GLOBAL:  CREATE PROCEDURE ##GlobalProc ...
+
+==============================
+SECTION 4: SQL INJECTION
+==============================
+
+i) Basic Injection:
+-------------------
+' OR '1'='1
+
+Query:
+SELECT * FROM users WHERE username = '' OR '1'='1';
+
+ii) Multi-statement Injection:
+------------------------------
+'; DROP TABLE users; --
+
+iii) Preventing Injection:
+--------------------------
+- Use Prepared Statements / Parameterized Queries
+- Use ORM frameworks (like SQLAlchemy, Entity Framework)
+- Validate and sanitize inputs
+
+==============================
+SECTION 5: TRIGGERS
+==============================
+
+i) DML Triggers:
+----------------
+CREATE TRIGGER trg_after_insert
+AFTER INSERT ON students
+BEGIN
+    INSERT INTO logs(action) VALUES ('Student Inserted');
+END;
+
+ii) INSTEAD OF Triggers:
+------------------------
+CREATE TRIGGER trg_instead_update
+INSTEAD OF UPDATE ON students
+BEGIN
+    INSERT INTO audit_log(action) VALUES ('Update attempt');
+END;
+
+iii) Modify Triggers:
+---------------------
+DROP TRIGGER trg_after_insert;
+-- Then recreate it with new logic
+
